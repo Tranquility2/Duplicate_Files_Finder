@@ -70,8 +70,9 @@ def get_duplicate_files(test_location, func_dict, func_prop):
     print 'Total of {} items\n'.format(len(result))
 
 
-dir_location = "C:\demo_dup"
-unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
-unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
-get_duplicate_files(dir_location, unique_file_finder, get_file_hash)
+if __name__ == '__main__':
+    dir_location = "C:\demo_dup"
+    unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
+    unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
+    get_duplicate_files(dir_location, unique_file_finder, get_file_hash)
 
