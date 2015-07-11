@@ -3,7 +3,7 @@
 
 #####TODO:
 * ~~fix hash for big files~~ (done)
-* add support for traversing dirs
+* ~~add support for traversing dirs~~ (done)
 * add optimizations:
   - find size first
   - Multi-threading 
