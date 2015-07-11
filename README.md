@@ -1,7 +1,7 @@
 # Duplicate_Files_Finder
 ### Checking for duplicate files in a directory
 
-TODO:
+#####TODO:
 * ~~fix hash for big files~~ (done)
 * add optimizations:
   - find size first
