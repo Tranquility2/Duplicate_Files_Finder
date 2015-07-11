@@ -28,22 +28,25 @@ def get_file_hash(file_name, block_size=2**20):
     return md5_hash.hexdigest()
 
 
-def unique_file(location, func):
+def unique_file_finder(files_location_path, calculate_file_function):
+
     files_dict = {}
+
     try:
-        os.chdir(location)
+        os.chdir(files_location_path)
     finally:
-        file_list = os.listdir(location)
+        file_list = os.listdir(files_location_path)
         for item in file_list:
             if not os.path.isdir(item):
                 # get the file property using func (size/hash)
-                file_prop = func(item)
+                file_prop = calculate_file_function(item)
                 if file_prop in files_dict:
                     # append the file name to the existing array
                     files_dict[file_prop].append(item)
                 else:
                     # create a new array
                     files_dict[file_prop] = [item]
+
     return OrderedDict(sorted(files_dict.items(), key=lambda t: t[0]))
 
 
