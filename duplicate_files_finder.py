@@ -21,13 +21,6 @@ def get_file_hash(file_name):
     return md5_result
 
 
-def sizeof_fmt(num, suffix='B'):
-    for unit in ['','Ki','Mi','Gi','Ti']:
-        if abs(num) < 1024.0:
-            return "%1.0f%s%s" % (num, unit, suffix)
-        num /= 1024.0
-
-
 def unique_file(location, func):
     files_dict = {}
     try:
