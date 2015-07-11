@@ -16,8 +16,8 @@ def get_file_hash(file_name, block_size=2**20):
     md5_hash = hashlib.md5()
 
     with open(os.path.join(file_name), "rb") as file_to_check:
-        # read file contents
         while True:
+            # read file contents
             file_buffer = file_to_check.read(block_size)
             if not file_buffer:
                 break
@@ -51,12 +51,11 @@ def unique_file_finder(files_location_path, calculate_file_function):
 def dir_tester_print(test_location, func_dict, func_prop):
 
     dict_unique_file = func_dict(test_location, func_prop)
-    max_string_len = len(str(max(dict_unique_file)))
 
     for key, value in dict_unique_file.iteritems():
-        string_space_needed = max_string_len - len(str(key))
-        print "%s%s | %s" % (str(key), " " * string_space_needed, str(value))
-    print "Total of %s items" % len(dict_unique_file)
+        print '{0: <16} | {1}'.format(key, value)
+
+    print 'Total of {} items'.format(len(dict_unique_file))
 
 
 def get_duplicates(test_location, func_dict, func_prop):
@@ -69,7 +68,8 @@ def get_duplicates(test_location, func_dict, func_prop):
             counter += 1
             print value
 
-    print "Total of %s items" % counter
+    print 'Total of {} items'.format(counter)
+
 
 dir_location = "C:\demo_dup"
 dir_tester_print(dir_location, unique_file_finder, os.path.getsize)
