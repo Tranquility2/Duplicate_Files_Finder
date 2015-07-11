@@ -3,7 +3,7 @@
     Python Version: 2.7
 """
 __license__ = "GPL"
-__version__ = "0.1"
+__version__ = "0.2"
 __status__ = "Prototype"
 
 
