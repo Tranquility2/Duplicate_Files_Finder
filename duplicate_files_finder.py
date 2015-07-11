@@ -12,13 +12,20 @@ import hashlib
 from collections import OrderedDict
 
 
-def get_file_hash(file_name):
-    with open(file_name) as file_to_check:
+def get_file_hash(file_name, block_size=2**20):
+
+    md5_hash = hashlib.md5()
+
+    with open(os.path.join(file_name), "rb") as file_to_check:
         # read file contents
-        data = file_to_check.read()
-        # get file md5
-        md5_result = hashlib.md5(data).hexdigest()
-    return md5_result
+        while True:
+            file_buffer = file_to_check.read(block_size)
+            if not file_buffer:
+                break
+            # update file md5
+            md5_hash.update(file_buffer)
+
+    return md5_hash.hexdigest()
 
 
 def unique_file(location, func):
