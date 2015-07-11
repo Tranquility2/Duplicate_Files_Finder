@@ -14,9 +14,15 @@ import argparse
 
 
 def get_file_hash(file_path, block_size=2**20):
-
+    """
+    Returns the hash of a given file
+    :rtype : string of double length, containing only hexadecimal digits
+    :param file_path: location of the file
+    :param block_size: block size to use for buffer
+    :return: hex digest of file hash
+    """
     md5_hash = hashlib.md5()
-
+    # open the file
     with open(file_path, "rb") as file_to_check:
         while True:
             # read file contents
@@ -30,6 +36,14 @@ def get_file_hash(file_path, block_size=2**20):
 
 
 def unique_file_finder(search_location_path, calculate_file_function):
+    """
+    Used to build a dictionary of files based on a file property,
+    for example: md5 based hash
+    :rtype : dictionary
+    :param search_location_path: location to scan
+    :param calculate_file_function: function used to categorized the file
+    :return: property based files dictionary
+    """
     # setup default dictionary
     files_dictionary = collections.defaultdict(list)
     # read file names in the directories
@@ -48,7 +62,14 @@ def unique_file_finder(search_location_path, calculate_file_function):
 
 
 def unique_file_tester_print(test_location_path, unique_dictionary_function, calculate_file_function):
-
+    """
+    Used for testing (output full dictionary info)
+    Creates a list of files based on unique property,
+    for example: md5 based hash
+    :param test_location_path: location to scan
+    :param unique_dictionary_function: function used build the dictionary
+    :param calculate_file_function: function used to categorized the file
+    """
     dictionary_unique_file = unique_dictionary_function(test_location_path, calculate_file_function)
 
     for key, value in dictionary_unique_file.iteritems():
@@ -58,7 +79,13 @@ def unique_file_tester_print(test_location_path, unique_dictionary_function, cal
 
 
 def get_duplicate_files(files_location_path, unique_dictionary_function, calculate_file_function):
-
+    """
+    Creates a list of files based on  md5 hash,
+    Outputs only values that have duplicates
+    :param files_location_path: location to scan
+    :param unique_dictionary_function: function used build the dictionary
+    :param calculate_file_function: function used to categorized the file
+    """
     dict_unique_file = unique_dictionary_function(files_location_path, calculate_file_function)
 
     filter_result = filter(lambda x: len(x) > 1, dict_unique_file.values())
@@ -70,6 +97,9 @@ def get_duplicate_files(files_location_path, unique_dictionary_function, calcula
 
 
 def main():
+    """
+    Handel basic operation using arguments
+    """
     parser = argparse.ArgumentParser(description="Find duplicate files")
 
     parser.add_argument("dir", action="store", type=str, help="directory to search")
