@@ -4,6 +4,7 @@
 #####TODO:
 * ~~fix hash for big files~~ (done)
 * ~~add support for traversing dirs~~ (done)
+* ~~add support for command arguments~~ (done)
 * add optimizations:
   - find size first (no need to hash everything)
   - Multi-threading 
