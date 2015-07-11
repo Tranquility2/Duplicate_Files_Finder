@@ -48,7 +48,7 @@ def unique_file_finder(files_location_path, calculate_file_function):
     return files_dict
 
 
-def dir_tester_print(test_location, func_dict, func_prop):
+def unique_file_tester_print(test_location, func_dict, func_prop):
 
     dict_unique_file = func_dict(test_location, func_prop)
 
@@ -58,21 +58,19 @@ def dir_tester_print(test_location, func_dict, func_prop):
     print 'Total of {} items'.format(len(dict_unique_file))
 
 
-def get_duplicates(test_location, func_dict, func_prop):
-    counter = 0
+def get_duplicate_files(test_location, func_dict, func_prop):
 
     dict_unique_file = func_dict(test_location, func_prop)
 
-    for key, value in dict_unique_file.iteritems():
-        if len(value) > 1:
-            counter += 1
-            print value
+    result = filter(lambda x: len(x) > 1, dict_unique_file.values())
+    for duplicate_items in result:
+        print duplicate_items
 
-    print 'Total of {} items'.format(counter)
+    print 'Total of {} items'.format(len(result))
 
 
 dir_location = "C:\demo_dup"
-dir_tester_print(dir_location, unique_file_finder, os.path.getsize)
-dir_tester_print(dir_location, unique_file_finder, get_file_hash)
-get_duplicates(dir_location, unique_file_finder, get_file_hash)
+unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
+unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
+get_duplicate_files(dir_location, unique_file_finder, get_file_hash)
 
