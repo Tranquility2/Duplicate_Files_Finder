@@ -9,7 +9,6 @@ __status__ = "Prototype"
 
 import os
 import hashlib
-from collections import OrderedDict
 
 
 def get_file_hash(file_name, block_size=2**20):
@@ -29,7 +28,6 @@ def get_file_hash(file_name, block_size=2**20):
 
 
 def unique_file_finder(files_location_path, calculate_file_function):
-
     files_dict = {}
 
     try:
@@ -47,13 +45,12 @@ def unique_file_finder(files_location_path, calculate_file_function):
                     # create a new array
                     files_dict[file_prop] = [item]
 
-    return OrderedDict(sorted(files_dict.items(), key=lambda t: t[0]))
+    return files_dict
 
 
 def dir_tester_print(test_location, func_dict, func_prop):
 
     dict_unique_file = func_dict(test_location, func_prop)
-
     max_string_len = len(str(max(dict_unique_file)))
 
     for key, value in dict_unique_file.iteritems():
@@ -63,10 +60,9 @@ def dir_tester_print(test_location, func_dict, func_prop):
 
 
 def get_duplicates(test_location, func_dict, func_prop):
+    counter = 0
 
     dict_unique_file = func_dict(test_location, func_prop)
-
-    counter = 0
 
     for key, value in dict_unique_file.iteritems():
         if len(value) > 1:
@@ -76,7 +72,7 @@ def get_duplicates(test_location, func_dict, func_prop):
     print "Total of %s items" % counter
 
 dir_location = "C:\demo_dup"
-dir_tester_print(dir_location, unique_file, os.path.getsize)
-dir_tester_print(dir_location, unique_file, get_file_hash)
-get_duplicates(dir_location, unique_file, get_file_hash)
+dir_tester_print(dir_location, unique_file_finder, os.path.getsize)
+dir_tester_print(dir_location, unique_file_finder, get_file_hash)
+get_duplicates(dir_location, unique_file_finder, get_file_hash)
 
