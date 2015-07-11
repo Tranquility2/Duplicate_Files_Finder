@@ -35,8 +35,8 @@ def unique_file_finder(files_location_path, calculate_file_function):
     finally:
         file_list = os.listdir(files_location_path)
         for item in file_list:
-            if not os.path.isdir(item):
-                # get the file property using func (size/hash)
+            if os.path.isfile(item):
+                # get the file property using calculate_file_function (size/hash)
                 file_prop = calculate_file_function(item)
                 if file_prop in files_dict:
                     # append the file name to the existing array
@@ -48,26 +48,26 @@ def unique_file_finder(files_location_path, calculate_file_function):
     return files_dict
 
 
-def unique_file_tester_print(test_location, func_dict, func_prop):
+def unique_file_tester_print(test_location_path, unique_dictionary_function, calculate_file_function):
 
-    dict_unique_file = func_dict(test_location, func_prop)
+    dictionary_unique_file = unique_dictionary_function(test_location_path, calculate_file_function)
 
-    for key, value in dict_unique_file.iteritems():
+    for key, value in dictionary_unique_file.iteritems():
         print '{0: <16} | {1}'.format(key, value)
 
-    print 'Total of {} items\n'.format(len(dict_unique_file))
+    print 'Total of {} items\n'.format(len(dictionary_unique_file))
 
 
-def get_duplicate_files(test_location, func_dict, func_prop):
+def get_duplicate_files(files_location_path, unique_dictionary_function, calculate_file_function):
 
-    dict_unique_file = func_dict(test_location, func_prop)
+    dict_unique_file = unique_dictionary_function(files_location_path, calculate_file_function)
 
-    result = filter(lambda x: len(x) > 1, dict_unique_file.values())
+    filter_result = filter(lambda x: len(x) > 1, dict_unique_file.values())
 
-    for duplicate_items in result:
+    for duplicate_items in filter_result:
         print duplicate_items
 
-    print 'Total of {} items\n'.format(len(result))
+    print 'Total of {} items\n'.format(len(filter_result))
 
 
 if __name__ == '__main__':
