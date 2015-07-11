@@ -9,6 +9,7 @@ __status__ = "Prototype"
 
 import os
 import hashlib
+import collections
 
 
 def get_file_hash(file_name, block_size=2**20):
@@ -28,7 +29,8 @@ def get_file_hash(file_name, block_size=2**20):
 
 
 def unique_file_finder(files_location_path, calculate_file_function):
-    files_dict = {}
+
+    files_dict = collections.defaultdict(list)
 
     try:
         os.chdir(files_location_path)
@@ -38,12 +40,8 @@ def unique_file_finder(files_location_path, calculate_file_function):
             if os.path.isfile(item):
                 # get the file property using calculate_file_function (size/hash)
                 file_prop = calculate_file_function(item)
-                if file_prop in files_dict:
-                    # append the file name to the existing array
-                    files_dict[file_prop].append(item)
-                else:
-                    # create a new array
-                    files_dict[file_prop] = [item]
+                # append the file name to the existing list
+                files_dict[file_prop].append(item)
 
     return files_dict
 
