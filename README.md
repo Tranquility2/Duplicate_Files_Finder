@@ -2,7 +2,7 @@
 ### Checking for duplicate files in a directorie
 
 TODO:
-* fix hash for big files
+* ~~fix hash for big files~~ (done)
 * add optimizations:
   - find size first
 * add docstring
