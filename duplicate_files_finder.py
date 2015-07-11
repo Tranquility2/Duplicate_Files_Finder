@@ -36,7 +36,7 @@ def unique_file_finder(search_location_path, calculate_file_function):
     for dir_name, sub_directory_list, file_list in os.walk(search_location_path):
         for file_name in file_list:
 
-            file_path = r'{0}\{1}'.format(dir_name, file_name)
+            file_path = os.path.join(dir_name, file_name)
 
             if os.path.isfile(file_path):
                 # get the file property using calculate_file_function (size/hash)
