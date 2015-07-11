@@ -3,9 +3,9 @@
 
 #####TODO:
 * ~~fix hash for big files~~ (done)
+* add support for traversing dirs
 * add optimizations:
   - find size first
   - Multi-threading 
 * add docstring
 * add doctest
-* add support for traversing dirs
