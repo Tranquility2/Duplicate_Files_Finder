@@ -5,7 +5,7 @@
 * ~~fix hash for big files~~ (done)
 * ~~add support for traversing dirs~~ (done)
 * add optimizations:
-  - find size first
+  - find size first (no need to hash everything)
   - Multi-threading 
 * add docstring
 * add doctest
