@@ -1,11 +1,6 @@
 """
-    Simple dup files finder
+    Simple duplicate files finder
     Python Version: 2.7
-
-    TODO: add docstring
-    TODO: add doctest
-    TODO: add support for traversing dirs
-    TODO: add optimizations
 """
 __license__ = "GPL"
 __version__ = "0.1"
