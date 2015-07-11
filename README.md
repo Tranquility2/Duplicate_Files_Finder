@@ -1,5 +1,5 @@
 # Duplicate_Files_Finder
-### Checking for duplicate files in a directory
+### Checking for duplicate files in a directory (using Python)
 
 #####TODO:
 * ~~fix hash for big files~~ (done)
