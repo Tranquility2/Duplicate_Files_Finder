@@ -13,7 +13,6 @@ import collections
 import argparse
 
 
-
 def get_file_hash(file_path, block_size=2**20):
 
     md5_hash = hashlib.md5()
