@@ -3,13 +3,15 @@
     Python Version: 2.7
 """
 __license__ = "GPL"
-__version__ = "0.3"
+__version__ = "0.4"
 __status__ = "Prototype"
 
 
 import os
 import hashlib
 import collections
+import argparse
+
 
 
 def get_file_hash(file_path, block_size=2**20):
@@ -68,9 +70,22 @@ def get_duplicate_files(files_location_path, unique_dictionary_function, calcula
     print 'Total of {} items\n'.format(len(filter_result))
 
 
-if __name__ == '__main__':
-    dir_location = r'C:\demo_dup'
-    #unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
-    #unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
-    get_duplicate_files(dir_location, unique_file_finder, get_file_hash)
+def main():
+    parser = argparse.ArgumentParser(description="Find duplicate files")
 
+    parser.add_argument("dir", action="store", type=str, help="directory to search")
+    parser.add_argument("-t", "--test", help="test in directory", action="store_true")
+
+    args = parser.parse_args()
+
+    if args.dir and args.test:
+        unique_file_tester_print(args.dir, unique_file_finder, os.path.getsize)
+        unique_file_tester_print(args.dir, unique_file_finder, get_file_hash)
+        get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
+
+    else:
+        get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
+
+
+if __name__ == '__main__':
+    main()
