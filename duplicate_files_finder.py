@@ -43,7 +43,7 @@ def unique_file(location, func):
 def dir_tester_print(test_location, func_dict, func_prop):
 
     dict_unique_file = func_dict(test_location, func_prop)
-    
+
     max_string_len = len(str(max(dict_unique_file)))
 
     for key, value in dict_unique_file.iteritems():
@@ -53,12 +53,16 @@ def dir_tester_print(test_location, func_dict, func_prop):
 
 
 def get_duplicates(test_location, func_dict, func_prop):
-    counter = 0
+
     dict_unique_file = func_dict(test_location, func_prop)
+
+    counter = 0
+
     for key, value in dict_unique_file.iteritems():
         if len(value) > 1:
             counter += 1
             print value
+
     print "Total of %s items" % counter
 
 dir_location = "C:\demo_dup"
