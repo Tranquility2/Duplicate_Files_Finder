@@ -78,15 +78,14 @@ def unique_file_tester_print(test_location_path, unique_dictionary_function, cal
     print 'Total of {} items\n'.format(len(dictionary_unique_file))
 
 
-def get_duplicate_files(files_location_path, unique_dictionary_function, calculate_file_function):
+def get_duplicate_files(files_location_path, unique_dictionary_function):
     """
-    Creates a list of files based on  md5 hash,
-    Outputs only values that have duplicates
+    Creates a list of files based on hash,
+    Output filters only lists of duplicates
     :param files_location_path: location to scan
     :param unique_dictionary_function: function used build the dictionary
-    :param calculate_file_function: function used to categorized the file
     """
-    dict_unique_file = unique_dictionary_function(files_location_path, calculate_file_function)
+    dict_unique_file = unique_dictionary_function(files_location_path, get_file_hash)
 
     filter_result = filter(lambda x: len(x) > 1, dict_unique_file.values())
 
@@ -98,7 +97,7 @@ def get_duplicate_files(files_location_path, unique_dictionary_function, calcula
 
 def main():
     """
-    Handel basic operation using arguments
+    Handle basic operation using arguments
     """
     parser = argparse.ArgumentParser(description="Find duplicate files")
 
@@ -110,9 +109,9 @@ def main():
     if args.dir and args.test:
         unique_file_tester_print(args.dir, unique_file_finder, os.path.getsize)
         unique_file_tester_print(args.dir, unique_file_finder, get_file_hash)
-        get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
+        get_duplicate_files(args.dir, unique_file_finder)
     else:
-        get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
+        get_duplicate_files(args.dir, unique_file_finder)
 
 
 if __name__ == '__main__':
