@@ -55,7 +55,7 @@ def unique_file_tester_print(test_location, func_dict, func_prop):
     for key, value in dict_unique_file.iteritems():
         print '{0: <16} | {1}'.format(key, value)
 
-    print 'Total of {} items'.format(len(dict_unique_file))
+    print 'Total of {} items\n'.format(len(dict_unique_file))
 
 
 def get_duplicate_files(test_location, func_dict, func_prop):
@@ -63,10 +63,11 @@ def get_duplicate_files(test_location, func_dict, func_prop):
     dict_unique_file = func_dict(test_location, func_prop)
 
     result = filter(lambda x: len(x) > 1, dict_unique_file.values())
+
     for duplicate_items in result:
         print duplicate_items
 
-    print 'Total of {} items'.format(len(result))
+    print 'Total of {} items\n'.format(len(result))
 
 
 dir_location = "C:\demo_dup"
