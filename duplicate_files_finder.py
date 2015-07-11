@@ -41,8 +41,11 @@ def unique_file(location, func):
 
 
 def dir_tester_print(test_location, func_dict, func_prop):
+
     dict_unique_file = func_dict(test_location, func_prop)
-    max_string_len = len(str((max(dict_unique_file))))
+    
+    max_string_len = len(str(max(dict_unique_file)))
+
     for key, value in dict_unique_file.iteritems():
         string_space_needed = max_string_len - len(str(key))
         print "%s%s | %s" % (str(key), " " * string_space_needed, str(value))
