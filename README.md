@@ -1,7 +1,7 @@
 # Duplicate_Files_Finder
 ### Checking for duplicate files in a directory (using Python)
 
-#####TODO:
+#####ToDo:
 * ~~fix hash for big files~~ (done)
 * ~~add support for traversing dirs~~ (done)
 * ~~add support for command arguments~~ (done)
@@ -9,4 +9,8 @@
   - find size first (no need to hash everything)
   - Multi-threading 
 * ~~add docstring~~ (done)
-* add doctest
+* add ~~doctest~~ testing
+
+#####Testing:
+for testing: https://docs.python.org/2/library/unittest.html
+
