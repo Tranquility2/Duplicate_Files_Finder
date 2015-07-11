@@ -8,5 +8,5 @@
 * add optimizations:
   - find size first (no need to hash everything)
   - Multi-threading 
-* add docstring
+* ~~add docstring~~ (done)
 * add doctest
