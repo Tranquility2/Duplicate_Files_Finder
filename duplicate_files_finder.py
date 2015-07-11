@@ -3,7 +3,7 @@
     Python Version: 2.7
 """
 __license__ = "GPL"
-__version__ = "0.2"
+__version__ = "0.3"
 __status__ = "Prototype"
 
 
@@ -28,22 +28,22 @@ def get_file_hash(file_name, block_size=2**20):
     return md5_hash.hexdigest()
 
 
-def unique_file_finder(files_location_path, calculate_file_function):
+def unique_file_finder(search_location_path, calculate_file_function):
+    # setup default dictionary
+    files_dictionary = collections.defaultdict(list)
+    # read file names in the directories
+    for dir_name, sub_directory_list, file_list in os.walk(search_location_path):
+        for file_name in file_list:
 
-    files_dict = collections.defaultdict(list)
+            file_path = r'{0}\{1}'.format(dir_name, file_name)
 
-    try:
-        os.chdir(files_location_path)
-    finally:
-        file_list = os.listdir(files_location_path)
-        for item in file_list:
-            if os.path.isfile(item):
+            if os.path.isfile(file_path):
                 # get the file property using calculate_file_function (size/hash)
-                file_prop = calculate_file_function(item)
+                calculate_file_info = calculate_file_function(file_path)
                 # append the file name to the existing list
-                files_dict[file_prop].append(item)
+                files_dictionary[calculate_file_info].append(file_path)
 
-    return files_dict
+    return files_dictionary
 
 
 def unique_file_tester_print(test_location_path, unique_dictionary_function, calculate_file_function):
@@ -69,8 +69,8 @@ def get_duplicate_files(files_location_path, unique_dictionary_function, calcula
 
 
 if __name__ == '__main__':
-    dir_location = "C:\demo_dup"
-    unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
-    unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
+    dir_location = r'C:\demo_dup'
+    #unique_file_tester_print(dir_location, unique_file_finder, os.path.getsize)
+    #unique_file_tester_print(dir_location, unique_file_finder, get_file_hash)
     get_duplicate_files(dir_location, unique_file_finder, get_file_hash)
 
