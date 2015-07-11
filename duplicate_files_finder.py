@@ -81,7 +81,6 @@ def main():
         unique_file_tester_print(args.dir, unique_file_finder, os.path.getsize)
         unique_file_tester_print(args.dir, unique_file_finder, get_file_hash)
         get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
-
     else:
         get_duplicate_files(args.dir, unique_file_finder, get_file_hash)
 
