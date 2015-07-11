@@ -12,11 +12,11 @@ import hashlib
 import collections
 
 
-def get_file_hash(file_name, block_size=2**20):
+def get_file_hash(file_path, block_size=2**20):
 
     md5_hash = hashlib.md5()
 
-    with open(os.path.join(file_name), "rb") as file_to_check:
+    with open(file_path, "rb") as file_to_check:
         while True:
             # read file contents
             file_buffer = file_to_check.read(block_size)
