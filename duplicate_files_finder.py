@@ -35,6 +35,22 @@ def get_file_hash(file_path, block_size=2**20):
     return md5_hash.hexdigest()
 
 
+def update_dictionary_by_file_path(file_path, calculate_file_function, files_dictionary):
+    """
+    Updates a given dictionary based in on a file property,
+    for example: md5 based hash
+    :param file_path: file location to process
+    :param calculate_file_function: function used to categorized the file
+    :param files_dictionary: dictionary to update
+    :return:
+    """
+    if os.path.isfile(file_path):
+        # get the file property using calculate_file_function (size/hash)
+        calculate_file_info = calculate_file_function(file_path)
+        # append the file name to the existing list
+        files_dictionary[calculate_file_info].append(file_path)
+
+
 def find_duplicate_files_by_location(search_location_path, calculate_file_function):
     """
     Used to build a dictionary of files based on a file property,
@@ -48,14 +64,10 @@ def find_duplicate_files_by_location(search_location_path, calculate_file_functi
     # read file names in the directories
     for dir_name, sub_directory_list, file_list in os.walk(search_location_path):
         for file_name in file_list:
-
+            # build full file path
             file_path = os.path.join(dir_name, file_name)
-
-            if os.path.isfile(file_path):
-                # get the file property using calculate_file_function (size/hash)
-                calculate_file_info = calculate_file_function(file_path)
-                # append the file name to the existing list
-                files_dictionary[calculate_file_info].append(file_path)
+            # add to dictionary
+            update_dictionary_by_file_path(file_path, calculate_file_function, files_dictionary)
 
     return files_dictionary
 
@@ -104,8 +116,8 @@ def print_duplicate_files(test_location_path):
     """
     Prints a list of files based on md5 hash
     This uses 2 iteration:
-    1st filter duplicated files by size (very fast)
-    2nd part is to filter this list using hash to get better results (can be slow)
+    1st filter duplicated files by size (fast)
+    2nd part is to filter this list using hash to get better results (slow)
     --This way it will try and limit the number of files that we need to hash
     :rtype : string
     :param test_location_path: location to scan
