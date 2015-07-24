@@ -9,8 +9,4 @@
   - ~~find size first (no need to hash everything)~~ (done)
   - Multi-threading 
 * ~~add docstring~~ (done)
-* add ~~doctest~~ testing
-
-#####Testing:
-for testing: https://docs.python.org/2/library/unittest.html
-
+* add testing (https://docs.python.org/2/library/unittest.html)
