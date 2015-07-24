@@ -118,13 +118,13 @@ def print_duplicate_files(test_location_path):
     """
     # Get list of unique files by size
     dictionary_unique_file = find_duplicate_files_by_location(test_location_path, os.path.getsize, True)
-    print 'Total of {} items (1st check)'.format(len(dictionary_unique_file))
     # Improve the list by using hash
     dictionary_unique_file_improved = find_duplicate_files_in_list(dictionary_unique_file, get_file_hash, True)
 
     for duplicate_items in dictionary_unique_file_improved:
         print duplicate_items
 
+    print 'Total of {} items (1st check)'.format(len(dictionary_unique_file))
     print 'Total of {} items\n'.format(len(dictionary_unique_file_improved))
 
 
@@ -139,12 +139,11 @@ def main():
 
     args = parser.parse_args()
 
-    if args.dir and args.test:
+    if args.test:
         print_duplicate_files_tester(args.dir, os.path.getsize)
         print_duplicate_files_tester(args.dir, get_file_hash)
-        print_duplicate_files(args.dir)
-    else:
-        print_duplicate_files(args.dir)
+
+    print_duplicate_files(args.dir)
 
 
 if __name__ == '__main__':
