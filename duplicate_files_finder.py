@@ -35,14 +35,13 @@ def get_file_hash(file_path, block_size=2**20):
     return md5_hash.hexdigest()
 
 
-def find_duplicate_files_by_location(search_location_path, calculate_file_function, filter_duplicates=True):
+def find_duplicate_files_by_location(search_location_path, calculate_file_function):
     """
     Used to build a dictionary of files based on a file property,
     for example: md5 based hash
     :rtype : dictionary
     :param search_location_path: location to scan
     :param calculate_file_function: function used to categorized the file
-    :param filter_duplicates: Output filters only lists of duplicates
     :return: property based files dictionary
     """
     files_dictionary = collections.defaultdict(list)
@@ -58,14 +57,10 @@ def find_duplicate_files_by_location(search_location_path, calculate_file_functi
                 # append the file name to the existing list
                 files_dictionary[calculate_file_info].append(file_path)
 
-    if filter_duplicates:
-        filter_result = filter(lambda x: len(x) > 1, files_dictionary.values())
-        return filter_result
-    else:
-        return files_dictionary
+    return files_dictionary
 
 
-def find_duplicate_files_in_list(file_group_list, calculate_file_function, filter_duplicates=True):
+def find_duplicate_files_in_list(file_group_list, calculate_file_function):
     """
     Used to build a dictionary of files based on a file property from a given list,
     for example: md5 based hash
@@ -84,11 +79,7 @@ def find_duplicate_files_in_list(file_group_list, calculate_file_function, filte
                 # append the file name to the existing list
                 files_dictionary[calculate_file_info].append(file_path)
 
-    if filter_duplicates:
-        filter_result = filter(lambda x: len(x) > 1, files_dictionary.values())
-        return filter_result
-    else:
-        return files_dictionary
+    return files_dictionary
 
 
 def print_duplicate_files_tester(test_location_path, calculate_file_function):
@@ -96,15 +87,17 @@ def print_duplicate_files_tester(test_location_path, calculate_file_function):
     Used for testing (output full dictionary info)
     Prints a list of files based on unique property,
     for example: md5 based hash
+    :rtype : string
     :param test_location_path: location to scan
     :param calculate_file_function: function used to categorized the file
+    :return: formatted string containing summary
     """
-    dictionary_unique_file = find_duplicate_files_by_location(test_location_path, calculate_file_function, False)
+    dictionary_unique_file = find_duplicate_files_by_location(test_location_path, calculate_file_function)
 
     for key, value in dictionary_unique_file.iteritems():
         print '{0: <16} | {1}'.format(key, value)
 
-    print 'Total of {} items\n'.format(len(dictionary_unique_file))
+    return 'Total of {} items\n'.format(len(dictionary_unique_file))
 
 
 def print_duplicate_files(test_location_path):
@@ -114,18 +107,21 @@ def print_duplicate_files(test_location_path):
     1st filter duplicated files by size (very fast)
     2nd part is to filter this list using hash to get better results (can be slow)
     --This way it will try and limit the number of files that we need to hash
+    :rtype : string
     :param test_location_path: location to scan
     """
-    # Get list of unique files by size
-    dictionary_unique_file = find_duplicate_files_by_location(test_location_path, os.path.getsize, True)
-    # Improve the list by using hash
-    dictionary_unique_file_improved = find_duplicate_files_in_list(dictionary_unique_file, get_file_hash, True)
+    # get list of unique files by size
+    unique_files_list = find_duplicate_files_by_location(test_location_path, os.path.getsize)
+    filtered_unique_files_list = filter(lambda x: len(x) > 1, unique_files_list.values())
+    # improve the list by using hash
+    dictionary_unique_file_improved = find_duplicate_files_in_list(filtered_unique_files_list, get_file_hash)
+    filtered_dictionary_unique_file_improved = filter(lambda x: len(x) > 1, dictionary_unique_file_improved.values())
 
-    for duplicate_items in dictionary_unique_file_improved:
+    for duplicate_items in filtered_dictionary_unique_file_improved:
         print duplicate_items
 
-    print 'Total of {} items (1st check)'.format(len(dictionary_unique_file))
-    print 'Total of {} items\n'.format(len(dictionary_unique_file_improved))
+    return 'Total of {} items ({} items on 1st check)\n'.format(len(dictionary_unique_file_improved),
+                                                                len(unique_files_list))
 
 
 def main():
@@ -140,8 +136,8 @@ def main():
     args = parser.parse_args()
 
     if args.test:
-        print_duplicate_files_tester(args.dir, os.path.getsize)
-        print_duplicate_files_tester(args.dir, get_file_hash)
+        print print_duplicate_files_tester(args.dir, os.path.getsize)
+        print print_duplicate_files_tester(args.dir, get_file_hash)
 
     print_duplicate_files(args.dir)
 
