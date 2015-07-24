@@ -82,7 +82,7 @@ def find_duplicate_files(files_location_path, calculate_file_function,
 def print_duplicate_files_tester(test_location_path, calculate_file_function):
     """
     Used for testing (output full dictionary info)
-    Creates a list of files based on unique property,
+    Prints a list of files based on unique property,
     for example: md5 based hash
     :param test_location_path: location to scan
     :param calculate_file_function: function used to categorized the file
@@ -98,9 +98,7 @@ def print_duplicate_files_tester(test_location_path, calculate_file_function):
 
 def print_duplicate_files(test_location_path):
     """
-    Used for testing (output full dictionary info)
-    Creates a list of files based on unique property,
-    for example: md5 based hash
+    Prints a list of files based on md5 hash
     :param test_location_path: location to scan
     """
     dictionary_unique_file = find_duplicate_files(test_location_path, get_file_hash, True)
